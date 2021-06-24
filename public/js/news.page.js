@@ -655,6 +655,7 @@ document.querySelector('.dropdown-menu').addEventListener('click', function (e) 
   })
     .then(response => response.json())
     .then(result => {
+      photoWall.innerHTML = '';
       if (result.length > 1) {
         result.forEach(photo => {
           photoWall.innerHTML +=
@@ -665,7 +666,6 @@ document.querySelector('.dropdown-menu').addEventListener('click', function (e) 
           </a>`
         });
       } else {
-        photoWall.innerHTML = '';
         result.info_imgs.forEach(photo => {
           photoWall.innerHTML +=
             `<a href="${photo.img}" data-lightbox="${photo.info_id}" data-title="${photo.name}">
@@ -791,16 +791,13 @@ lightbox.option({
 });
 
 // 讓資訊展開時回到頂端
-// NowInfs.forEach(inf => {
-//   inf.addEventListener('click', function () {
-//     this.scrollIntoView({behavior: "smooth"});
-//   });
-// });
 toTop ();
 function toTop () {
   document.querySelectorAll('#content-infs-now .content-inf').forEach(inf => {
     inf.addEventListener('click', function () {
-      this.scrollIntoView({behavior: "smooth"});
+      setTimeout(() => {
+        this.scrollIntoView({behavior: "smooth"});
+      }, 570);
     });
   });
 };

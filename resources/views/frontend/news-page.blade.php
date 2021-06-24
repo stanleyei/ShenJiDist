@@ -39,21 +39,22 @@
                         value="選擇日期">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="點我選擇活動">
                             選擇活動
                         </button>
+                        @php
+                            $marketData = collect();
+                            foreach ($eventInfos as $info) {
+                                if(count($info->infoImgs) !== 0){
+                                    $marketData->push($info->infoImgs->first());
+                                };
+                            };
+                        @endphp
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div class="dropdown-item text-center" data-market="all">所有活動照片</div>
-                            <div class="dropdown-item" data-market="10">0120 小蝸牛市集</div>
-                            <div class="dropdown-item" data-market="11">0210 暮暮市集</div>
-                            <div class="dropdown-item" data-market="12">0218 寧夏市集</div>
-                            <div class="dropdown-item" data-market="13">0410 散策市集</div>
-                            <div class="dropdown-item" data-market="14">0507 暮暮市集</div>
-                            <div class="dropdown-item" data-market="15">0513 微涼市集</div>
-                            <div class="dropdown-item" data-market="16">0517 小蝸牛市集</div>
-                            <div class="dropdown-item" data-market="17">0708 暮暮市集</div>
-                            <div class="dropdown-item" data-market="18">0708 草地市集</div>
-                            <div class="dropdown-item" data-market="19">1008 微風市集</div>
+                            @foreach ($marketData as $data)
+                                <div class="dropdown-item" data-market="{{$data->info_id}}">{{$data->name}}</div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -187,76 +188,21 @@
                         @endforeach
                     </div>
                 </div>
+                @php
+                    $infoImgs = collect();
+                    foreach ($eventInfos as $info) {
+                        $infoImgs->push($info->infoImgs);
+                    };
+                @endphp
                 <div class="feast-photo-wall">
-                    @foreach ($eventInfos[0]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[1]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[2]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[3]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[4]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[5]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[6]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[7]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[8]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
-                    @endforeach
-                    @foreach ($eventInfos[9]->infoImgs??[] as $img)
-                    <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}">
-                        <figure style="background-image: url({{asset($img->img)}});">
-                            <div class="figure-hover-appear">{{$img->name}}</div>
-                        </figure>
-                    </a>
+                    @foreach ($infoImgs as $imgs)
+                        @foreach ($imgs as $img)
+                        <a href="{{asset($img->img)}}" data-lightbox="{{$img->info_id}}" data-title="{{$img->name}}" title="點我看大圖">
+                            <figure style="background-image: url({{asset($img->img)}});">
+                                <div class="figure-hover-appear">{{$img->name}}</div>
+                            </figure>
+                        </a>
+                        @endforeach
                     @endforeach
                 </div>
             </div>

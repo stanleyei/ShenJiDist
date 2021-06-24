@@ -251,7 +251,7 @@
                                     $view->viewImgs->shift();
                                 @endphp
                                 @foreach ($view->viewImgs as $img)
-                                <a href="{{$img->img}}" data-lightbox="roadtrip-{{$img->view_id}}"></a>
+                                <a href="{{$img->img}}" data-lightbox="roadtrip-{{$img->view_id}}" data-title="{{$view->name}}"></a>
                                 @endforeach
                                 <p>{{$view->content}}</p>
                             </div>
