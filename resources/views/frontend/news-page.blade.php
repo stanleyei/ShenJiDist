@@ -86,8 +86,8 @@
                                     </div>
                                     <time>
                                         <div>
-                                            <span>2021/06/03(一)</span>
-                                            <span>-06/14(五)</span>
+                                            <span class="event-start">2021/06/03(一)</span>
+                                            <span class="event-end">-06/14(五)</span>
                                         </div>
                                         <div>10:00-19:00</div>
                                     </time>
@@ -104,9 +104,13 @@
                                     <span>主辦單位</span>
                                     <span class="ml-sm-1">{{$info->organizer}}</span>
                                 </div>
+                                @php
+                                    $dateStart = str_replace("-",'', $info->date_start);
+                                    $dateEnd = str_replace("-",'', $info->date_end);
+                                @endphp
                                 <div class="event-calendar">
                                     <a target="_blank"
-                                        href="http://www.google.com/calendar/event?action=TEMPLATE&text={{$info->name}}&dates=20210610/20210611&details={{$info->content}}&location={{$info->location}}&trp=false"
+                                        href="http://www.google.com/calendar/event?action=TEMPLATE&text={{$info->name}}&dates={{$dateStart}}/{{$dateEnd}}&details={{$info->content}}&location={{$info->location}}&trp=false"
                                         title="加入google日曆">
                                         <i class="far fa-calendar-minus"></i>
                                         <div>加入google日曆</div>
