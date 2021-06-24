@@ -1,0 +1,480 @@
+//1.盡量使用class，減少使用id。
+//2.除了會更換圖片資料的地方外，盡量不要寫inner style。
+//3.class命名規則，以'-'為主，結構不要太長最多3層，例: new-list、news-list-img。
+//4.可以的話盡量使用語意化標籤，但是最好把父層也寫進去，例: news > article。
+//5.更改此檔案時，必需要參與者一致同意才可更改。
+//6.圖片檔名一律用有意義英文。
+
+//顏色變數
+$main-color:#54291c;
+$nav-bg:rgba(84, 41, 28, 0.9);
+$news-tag-f-bg:#AB3030;
+$store-tag-f-bg:#96422D;
+$title-bg:#D28E76;
+$store-list-bg:#FBE6C3;
+$body-bg:#FFFCF4;
+$tag-bg:#C4C4C4;
+$form-title-bg:#E0E0E0;
+$form-bg:#F2F2F2;
+$substrate-bg:rgba(255, 255, 255, 0.8);
+$footer-bg:#596E79;
+$footer-text:#ffffff;
+$nes-aside-tag: #333333;
+$news-event-tag:#F2C94C;
+
+//文字尺寸變數
+$h1:2.24vw; //42px
+$h2:1.875vw; //36px
+$h3:1.458vw; //28px
+$h4:1.354vw; //26px
+$h5:1.25vw; //24px
+$h6:1.146vw; //22px
+$h7:0.9375vw; //18px
+$h8:0.833vw; //16px
+$h9:0.729vw; //14px
+$h10:0.625vw; //12px
+
+//css屬性變數
+@mixin size($w, $h) {
+    width: $w;
+    height: $h;
+}
+
+@mixin flex($jc:center, $ai:center, $fl:flex) {
+    display: $fl;
+    justify-content: $jc;
+    align-items: $ai;
+}
+
+@mixin font($fs, $ta:center, $lh:inherit, $ls:0.1em) {
+    font-size: $fs;
+    text-align: $ta;
+    line-height: $lh;
+    letter-spacing: $ls;
+}
+
+@mixin position($tp:0, $lf:0, $tx:-50%, $ty:-50%) {
+    position: absolute;
+    top: $tp;
+    left: $lf;
+    transform: translate($tx, $ty);
+}
+
+@mixin w1366 {
+    @media(max-width:1366px) {
+        @content;
+    }
+}
+
+@mixin w1024 {
+    @media(max-width:1024px) {
+        @content;
+    }
+}
+
+@mixin w768 {
+    @media(max-width:768px) {
+        @content;
+    }
+}
+
+@mixin w576 {
+    @media(max-width:576px) {
+        @content;
+    }
+}
+
+@mixin w480 {
+    @media(max-width:480px) {
+        @content;
+    }
+}
+
+@mixin w375 {
+    @media(max-width:375px) {
+        @content;
+    }
+}
+
+//元件變數-首頁
+%header-section-btn {
+    padding-left: 0.521vw;
+    position: relative;
+    width: 50%;
+    display: flex;
+    color: $store-list-bg;
+    font-weight: 500;
+    font-size: $h4;
+    letter-spacing: 0.3em;
+    margin-bottom: 10px;
+
+    @include w1024 {
+        font-size: $h2;
+    }
+
+    @include w768{
+        font-size: $h1;
+    }
+
+    @include w576{
+        font-size: 0.9rem;
+    }
+
+    @include w375 {
+        font-size: 0.9rem;
+    }
+}
+
+%header-section-btn-icon {
+    position: relative;
+    display: block;
+    min-width: 2.08vw;
+    height: 5.56vh;
+    line-height: 5.56vh;
+    text-align: center;
+    
+    @include w1024 {
+        margin: 0 15px 0 5px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    @include w768{
+        height: 30px;
+        line-height: 30px;
+    }
+
+    @include w375 {
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+%header-section-btn-title {
+    position: relative;
+    display: block;
+    height: 5.56vh;
+    line-height: 5.56vh;
+    white-space: nowrap;
+
+    @include w1024 {
+        height: 40px;
+        line-height: 40px;
+    }
+
+    @include w768{
+        height: 30px;
+        line-height: 30px;
+    }
+
+    @include w375 {
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+%title-cube {
+    width: 3.125vw;
+    height: 3.125vw;
+    min-height: 20px;
+    min-width: 20px;
+    content: '';
+    position: absolute;
+    background: $title-bg;
+    border-radius: 5px;
+    transform: translate(-2.6vw, -1vw);
+    z-index: -1;
+
+    @include w1024{
+        @include size(35px, 35px);
+    }
+
+    @include w375{
+        @include size(20px, 20px);
+        border-radius: 0;
+        transform: translate(-15px,0);
+    };
+}
+
+%title-vertical-text {
+    content: '';
+    position: absolute;
+    left: 0;
+    transform: translate(-15%, -80%) rotate(90deg);
+    letter-spacing: 0.1em;
+
+    @include w1366{
+        font-size: 1rem;
+        transform: translate(0, -80%) rotate(90deg);
+    }
+
+    @include w768{
+        transform: translate(0, -70%) rotate(90deg);
+        font-size: 0.8rem;
+    }
+
+    @include w375 {
+        font-size: 8px;
+        transform: translate(-80%, -70%) rotate(90deg);
+    }
+}
+
+%about-us-swiper-button {
+    width: 2.6vw;
+    height: 2.6vw;
+    border-radius: 50%;
+    background-color: $body-bg;
+    box-shadow: 1px 1px 2px $tag-bg;
+    transition: 0.8s ease-in-out;
+    opacity: 0;
+
+    @include w1024{
+        transform: translateY(1vw);
+    }
+}
+
+%date-btn {
+    min-width: 2.6vw;
+    height: 2.78vh;
+    border-radius: 6px;
+    border: 0;
+    margin: 1.48vh 0.42vw 0 0;
+    background-color: $form-bg;
+    color: $store-tag-f-bg;
+    font-size: $h10;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2.78vh;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+}
+
+%news-content-title-btn {
+    height: 1.85vh;
+    margin: 1.39vh 0 0 0.94vw;
+    border: 0;
+    background-color: $body-bg;
+    font-size: $h8;
+    color: $main-color;
+    text-shadow: 0 2px $tag-bg;
+    cursor: pointer;
+}
+
+%news-inf {
+    width: 100%;
+    height: 9.26vh;
+    position: relative;
+    margin-top: 1.85vh;
+    display: flex;
+    border-radius: 6px;
+    background-color: $form-bg;
+    box-shadow: 0 3px 3px $tag-bg;
+    cursor: pointer;
+
+    @include w375{
+        height: 45px;
+        border-radius: 2px;
+    }
+}
+
+%news-inf-before {
+    content: '';
+    position: absolute;
+    width: 1.04vw;
+    height: 9.26vh;
+    left: 0;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background-color: $news-tag-f-bg;
+    min-width: 20px;
+
+    @include w375{
+        width: 20px;
+        height: 45px;
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+    }
+}
+
+%news-inf-tag {
+    width: 4.27vw;
+    height: 1.945vh;
+    margin-top: 1.39vh;
+    background-color: $news-tag-f-bg;
+    text-align: center;
+    line-height: 1.945vh;
+    letter-spacing: 0.2em;
+    font-size: $h9;
+    color: $body-bg;
+    border-radius: 2px;
+    min-width: 64px;
+
+    @include w375{
+        @include size(55px, 13px);
+        margin-top: 5px;
+        letter-spacing: 0;
+        font-size: 0.7rem;
+        transform: translateX(-10%) scale(0.7);
+        line-height: 0.7rem
+    }
+}
+
+%news-date-select{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-color: $store-list-bg;
+    background-color: $store-list-bg;
+}
+
+%title-tra-circle {
+    @include size(60%, 100%);
+    @include flex;
+    margin: auto;
+    border-radius: 50%;
+    background-color: $title-bg;
+
+    @include w576{
+        height: 50%;
+    }
+    @include w375{
+        width: 50px;
+        height: 50px;
+    }
+}
+
+%title-tra-logotext {
+    font-family: 'Noto Sans TC', sans-serif;
+    text-align: center;
+    font-size: $h6;
+    line-height: 5.56vh;
+    letter-spacing: 10%;
+    white-space: nowrap;
+
+    @include w375{
+       font-size: 0.7rem;
+       transform: scale(0.8);
+
+       &:nth-child(1){
+        transform: translateX(0);
+        }
+    }
+}
+
+%title-tra-contentarea {
+    flex: 1;
+    height: 100%;
+    margin-left: 5.2vw;
+    background-color: $form-bg;
+    border-radius: 10px 0 0 10px;
+    position: relative;
+    align-items: center;
+    font-family: 'Noto Sans HK', sans-serif;
+
+    @include w768{
+        margin-left: 20px;
+    }
+}
+
+%title-tra-contenttext {
+    margin-left: 2.24vw;
+    font-size: $h4;
+    letter-spacing: 0.2em;
+    font-family: 'Noto Sans HK', sans-serif;
+    line-height: 5vh;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+
+    @include w576{
+        margin-left: 0;
+        font-size: 0.7rem;
+        transform: scale(0.9);
+        letter-spacing: 0.1em;
+    }
+}
+
+%shop-nav-tap {
+    @include size(6.7vw, 3.2vh);
+    @include font($h7, $lh:3.2vh);
+    background-color: $tag-bg;
+    border-radius: 5px;
+    cursor: pointer;
+
+    @include w1024{
+        @include size(9.3vw, 3.6vh);
+        @include font($h5, $lh:3.6vh);
+    }
+    @include w768{
+        @include size(25vw, 3.6vh);
+        @include font($h1, $lh:3.6vh);
+    }
+    @include w375{
+        @include size(80px, 20px);
+        line-height: 20px;
+    }
+}
+
+%map-house{
+    @include size(9%, 14%);            
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    cursor: pointer;
+    z-index: 10;
+    
+}
+
+%map-househover{
+    // @include size(12%, 18.5%);
+    background-image: url(../img/map-house.svg);
+    // transform: translate(-35px,-10px);
+    cursor: pointer;
+}
+
+//元件變數-內頁
+%news-page-aside-tag {
+    width: 9.375vw;
+    height: 5.56vh;
+    border: 0;
+    margin-left: 1.5625vw;
+    background-color: $tag-bg;
+    font-size: $h6;
+    line-height: 2.78vh;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+    color: $nes-aside-tag;
+    box-shadow: 1px 1px 3px $footer-bg;
+    text-align: center;
+    cursor: pointer;
+
+    @include w1366{
+        font-size: 0.9rem;
+    }
+
+    @include w1024{
+        width: 95px;
+        height: 42px;
+    }
+
+    @include w375{
+        width: 82px;
+        height: 33px;
+        margin: 0;
+    }
+}
+
+%tra-map-title-line{
+    @include size(100%, 50%);
+    content: '';
+    position: absolute;
+    bottom: 0%;
+    left: 0;
+    background-color: $store-list-bg;
+    z-index: -1;
+
+    @include w375{
+        height: 80%;
+        bottom: -40%;
+    }
+}

@@ -1,0 +1,421 @@
+@import 'group_web_variable';
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: $body-bg;
+    font-family: 'Noto Sans', sans-serif;
+    color: $main-color;
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+    color: $main-color;
+
+    &:hover {
+        text-decoration: none;
+        color: $main-color;
+    }
+}
+
+h2 {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+figure {
+    margin: 0;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+}
+
+.logo-link {
+    @include size(15vw, 5.729vw);
+    position: absolute;
+    right: 5vmin;
+    top: 5vmin;
+    z-index: 1;
+
+    .logo-img {
+        @include size(5.729vw, 5.729vw);
+        margin-right: 0.521vw;
+    }
+
+    .logo-text {
+        @include size(7.552vw, 4.48vw);
+    }
+}
+
+.header-shady{
+    
+    &::after{
+
+        @include w768{
+            @include size(100vw, 100vh);
+            content: '';
+            position: absolute;
+            right: -100vw;
+            background-color: $nes-aside-tag;
+            opacity: 0.4;
+            z-index: -99;
+            animation: shady 1s ease-in-out;
+
+            @keyframes shady {
+                0%{
+                    opacity: 0;
+                }
+    
+                100%{
+                    opacity: 0.4;
+                }
+            }
+        }  
+    }
+}
+
+header {
+    @include flex();
+    min-height: 100vh;
+    position: fixed;
+    z-index: 50;
+
+    nav {
+        @include size(1.93vw, 70vh);
+        @include flex;
+        min-width: 30px;
+        position: relative;
+        border-radius: 10px;
+        background-color: $main-color;
+        box-shadow: 0 5px 15px;
+        overflow: hidden;
+        transition: 1s;
+
+        @include w768{
+            @include size(50px, 50px);
+            border-radius: 5px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            box-shadow: none;
+        }
+
+        ul {
+            display: none;
+            width: 10vw;
+            padding: 0;
+            z-index: 20;
+            list-style: none;
+
+            @include w1024 {
+                width: 15vw;
+            }
+
+            @include w768{
+                width: 18vw;
+            }
+
+            @include w576{
+                width: 110px;
+            }
+
+            @include w375 {
+                width: 45%;
+            }
+
+            li {
+                position: relative;
+                width: 100%;
+                border-radius: 10px;
+
+                &:hover {
+                    background-color: #efefef;
+
+                    a {
+                        color: $nav-bg;
+                        font-weight: bold;
+                    }
+                }
+
+                a {
+                    @extend %header-section-btn;
+
+                    .icon {
+                        @extend %header-section-btn-icon;
+                    }
+
+                    .title {
+                        @extend %header-section-btn-title;
+                    }
+                }
+            }
+        }
+
+        .nav-img {
+            @include size(5.8vw, 109px);
+            min-width: 50px;
+            display: none;
+            right: 3vw;
+            bottom: 3vw;
+            background-image: url(../img/logo-bg-img.png);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: absolute;
+
+            @include w576{
+                right: 50%;
+                bottom: 15%;
+                transform: translateX(50%);
+            }
+
+            @include w375 {
+                @include size(52px, 60px);
+                right: 50%;
+                bottom: 15%;
+                transform: translateX(50%);
+            }
+        }
+    }
+
+    nav.active {
+        @include size(50vw, 100vh);
+        background-color: $nav-bg;
+
+        @include w768 {
+            width: 65vw;
+        }
+    }
+
+    .toggle {
+        @include size(30px, 80vh);
+        position: absolute;
+        right: 0;
+        top: 0;
+        background: none;
+        cursor: pointer;
+
+        &::before {
+            @include size(12.5px, 25px);
+            content: "";
+            position: absolute;
+            left: 15%;
+            top: 43%;
+            background-image: url(../img/nav-right.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            line-height: 20px;
+            text-align: center;
+
+            @include w768 {
+                @include size(37px, 50px);
+                background-image: url(../img/nav-hamburger.png);
+                top: 0;
+                left: -42%;
+            }
+        }
+    }
+
+    .toggle.active {
+        height: 100vh;
+
+        &::before {
+            top: 50%;
+            background-image: url(../img/nav-left.png);
+
+            @include w768 {
+                top: 1vh;
+                left: -57vw;
+                background-image: url(../img/nav-x.png);
+            }
+
+            @include w375 {
+                top: 0.4vh;
+                left: -206px;
+                background-image: url(../img/nav-x.png);
+            }
+        }
+    }
+
+    .ulbar.active {
+        display: block;
+    }
+
+    .nav-img.active {
+        display: block;
+    }
+}
+
+.traffic {
+    @include size(100%, 100vh);
+    @include flex;
+    border: 1.04vw solid $main-color;
+    position: relative;
+
+    .traffic-container {
+        @include size(80vw, 80vh);
+
+        .traffic-title {
+            position: relative;
+            padding-left: 3.125vw;
+
+            @include w1366{
+                margin: 0;
+                padding-left: 40px;
+            }
+            @include w375 {
+                height: 30px;
+                padding-left: 20px;
+            }
+
+            &::before {
+                @extend %title-cube;
+            }
+
+            h2 {
+                @include font($h1, start, inherit, 0.3em);
+                @include w1366{
+                    font-size: 1.8rem;
+                }
+                @include w375 {
+                    font-size: 1rem;
+                }
+            }
+
+            span {
+                @include font($h5);
+                @include w1366{
+                    font-size: 1rem;
+                }
+                @include w375 {
+                    letter-spacing: 0;
+                    font-size: 0.7rem;
+                    display: inline-block;
+                    transform: translate(-15%, -50%) scale(0.7);
+                }
+
+                &::before {
+                    @extend %title-vertical-text;
+                    content: 'About';
+                }
+            }
+
+            .tra-title-icon {
+                @include font($h5);
+
+                &::before {
+                    @extend %title-vertical-text;
+                    content: 'About';
+                }
+            }
+
+            .tra-youbike {
+                @include size(250px, 4.44vh);
+                @include position(33%, 33%, 0, 0);
+                text-align: center;
+                font-size: 1.7rem;
+                line-height: 5.56vh;
+                letter-spacing: 0.2em;
+                font-weight: bold;
+
+                @include w1024{
+                    font-size: 1.5rem;
+                    width: 200px;
+                }
+                @include w768{
+                    top: 120%;
+                    left: 20%;
+                }
+                @include w576{
+                    font-size: 1rem;
+                    width: 130px;
+                }
+                @include w375{
+                    @include size(100px , 20px);
+                    top: 140%;
+                    font-size: 0.75rem;
+                }
+
+                &::before{
+                    @extend %tra-map-title-line;
+                }
+            }
+
+            .youbike-point {
+                @include size(240px, 3.33vh);
+                @include position(102%, 52%, 0, 0);
+                text-align: center;
+                font-size: 1.2rem;
+                letter-spacing: 0.2em;
+                font-weight: bold;
+
+                @include w1024{
+                    font-size: 1.1rem;
+                    width: 190px;
+                }
+                @include w768{
+                    top: 180%;
+                    left: 40%;
+                }
+                @include w576{
+                    font-size: 1rem;
+                    width: 180px;
+                }
+                @include w375{
+                    @include size(130px , 20px);
+                    top: 250%;
+                    font-size: 0.75rem;
+                }
+
+                &::before{
+                    @extend %tra-map-title-line;
+                    @include w375{
+                        height: 80%;
+                        bottom: 15%;
+                    }
+                }
+            }
+        }
+
+        .traffic-bike {
+            width: 100%;
+            display: flex;
+
+            .bike-map {
+                @include size(65vw, 53vh);
+                margin: 100px auto;
+                background-color: $footer-text;
+                position: relative;
+
+                iframe {
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 100%;
+                    position: absolute;
+                }
+            }
+        }
+    }
+}
