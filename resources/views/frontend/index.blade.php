@@ -186,12 +186,12 @@
                         <div class="figure-box">
                             <div class="tap-change" data-title="1">
                                 @foreach ($foodShops as $shop)
-                                <figure style="background-image: url({{$shop->shopImgs[2]->img??''}});"></figure>
+                                <figure data-title="{{$shop->id - 1}}" style="background-image: url({{$shop->shopImgs[2]->img??''}});"></figure>
                                 @endforeach
                             </div>
                             <div class="tap-change" data-title="2">
                                 @foreach ($trinketShops as $shop)
-                                <figure style="background-image: url({{$shop->shopImgs[2]->img??''}});"></figure>
+                                <figure data-title="{{$shop->id - 1}}" style="background-image: url({{$shop->shopImgs[2]->img??''}});"></figure>
                                 @endforeach
                             </div>
                         </div>

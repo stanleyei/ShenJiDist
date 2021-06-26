@@ -14,59 +14,7 @@ fetch('/get_date_data', {
   body: infsData,
 })
   .then(response => response.json())
-  .then(result => {
-    const monthArray = [];
-    const dataArray = [];
-    result.forEach(data => {
-      if (data === 'none') {
-        contentInfs.innerHTML +=
-          `<div class='content-inf'>
-          <div class='inf-detail ml-4'>
-              <h4 style='line-height:9.25vh'>No Events</h4>
-          </div>
-        </div>
-        `;
-      } else {
-        const startMonth = data.date_start.split('-');
-        contentInfs.innerHTML +=
-          `<a class='content-inf' href='/news?tap=${data.info_type.id}&month=${startMonth[1]}&year=${startMonth[0]}' title='前往${data.info_type.name}'>
-          <div class='inf-date'>
-              <div class='during'>
-                  <div class='start-date'></div>
-              </div>
-              <span></span>
-          </div>
-          <div class='inf-detail'>
-              <div class='inf-tag'>${data.info_type.name}</div>
-              <h4>${data.name}</h4>
-          </div>
-          <span>more</span>
-          <i class='fas fa-chevron-right'></i>
-        </a>`;
-        const monthNumber = data.created_at.split('-');
-        if (monthNumber[1] === '10' || monthNumber[1] === '11' || monthNumber[1] === '12') {
-          monthArray.push(monthNumber[1]);
-        } else {
-          const singleMonth = monthNumber[1].split('0');
-          monthArray.push(singleMonth[1]);
-        };
-        const dataNumber = monthNumber[2].split('T');
-        dataArray.push(dataNumber[0]);
-      };
-    });
-
-    let x = 0;
-    document.querySelectorAll('.start-date').forEach(date => {
-      date.textContent = dataArray[x];
-      x++;
-    });
-
-    let i = 0;
-    document.querySelectorAll('.inf-date > span').forEach(month => {
-      month.textContent = monthData[monthArray[i] - 1];
-      i++
-    });
-  });
+  .then(result => dateChangeRader(result));
 
 // 整頁-fullpage輪播套件
 new fullpage('#fullpage', {
@@ -152,7 +100,7 @@ const monthList = document.querySelector('#month-list');
 const yearsList = document.querySelector('#years-list');
 let dataValue = 1;
 monthData.forEach(data => {
-  monthList.innerHTML += `<button class="month-btn" data-month="${dataValue}" title="${data}">${data}</button>`
+  monthList.innerHTML += `<button class="month-btn" data-month="${dataValue}" title="${data}">${data}</button>`;
   dataValue++;
 });
 for (let i = 0; i < 5; i++) {
@@ -188,13 +136,7 @@ function focusChange(dateBtns) {
       else if (this.getAttribute('class') === 'years-btn') {
         dateTitle.nextElementSibling.textContent = `,${this.textContent}`;
       }
-      dateBtns.forEach(btn => {
-        btn === this
-          ?
-          btn.classList.add('focus-change')
-          :
-          btn.classList.remove('focus-change');
-      });
+      dateBtns.forEach(btn => btn === this ? btn.classList.add('focus-change') : btn.classList.remove('focus-change'));
 
       const focisMonth = monthList.getElementsByClassName('month-btn focus-change')[0].dataset.month;
       const focisYear = yearsList.getElementsByClassName('years-btn focus-change')[0].dataset.year;
@@ -206,63 +148,8 @@ function focusChange(dateBtns) {
         method: 'POST',
         body: formData,
       })
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          const monthArray = [];
-          const dataArray = [];
-          contentInfs.innerHTML = '';
-          result.forEach(data => {
-            if (data === 'none') {
-              contentInfs.innerHTML +=
-                `<div class='content-inf'>
-                <div class='inf-detail ml-4'>
-                    <h4 style='line-height:9.25vh'>No Events</h4>
-                </div>
-              </div>
-              `;
-            } else {
-              const startMonth = data.date_start.split('-');
-              contentInfs.innerHTML +=
-                `<a class='content-inf' href='/news?tap=${data.info_type.id}&month=${startMonth[1]}&year=${startMonth[0]}' title='前往${data.info_type.name}'>
-                <div class='inf-date'>
-                    <div class='during'>
-                        <div class='start-date'></div>
-                    </div>
-                    <span></span>
-                </div>
-                <div class='inf-detail'>
-                    <div class='inf-tag'>${data.info_type.name}</div>
-                    <h4>${data.name}</h4>
-                </div>
-                <span>more</span>
-                <i class='fas fa-chevron-right'></i>
-              </a>`;
-              const monthNumber = data.created_at.split('-');
-              if (monthNumber[1] === '10' || monthNumber[1] === '11' || monthNumber[1] === '12') {
-                monthArray.push(monthNumber[1]);
-              } else {
-                const singleMonth = monthNumber[1].split('0');
-                monthArray.push(singleMonth[1]);
-              };
-              const dataNumber = monthNumber[2].split('T');
-              dataArray.push(dataNumber[0]);
-            };
-          });
-
-          let x = 0;
-          document.querySelectorAll('.start-date').forEach(date => {
-            date.textContent = dataArray[x];
-            x++;
-          });
-
-          let i = 0;
-          document.querySelectorAll('.inf-date > span').forEach(month => {
-            month.textContent = monthData[monthArray[i] - 1];
-            i++
-          });
-        });
+        .then(response => response.json())
+        .then(result => dateChangeRader(result));
     });
   });
 }
@@ -293,63 +180,8 @@ function monthLoop(e, direction, startIndex, finalIndex, count) {
       method: 'POST',
       body: formData,
     })
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        const monthArray = [];
-        const dataArray = [];
-        contentInfs.innerHTML = '';
-        result.forEach(data => {
-          if (data === 'none') {
-            contentInfs.innerHTML +=
-              `<div class='content-inf'>
-              <div class='inf-detail ml-4'>
-                  <h4 style='line-height:9.25vh'>No Events</h4>
-              </div>
-            </div>
-            `;
-          } else {
-            const startMonth = data.date_start.split('-');
-            contentInfs.innerHTML +=
-              `<a class='content-inf' href='/news?tap=${data.info_type.id}&month=${startMonth[1]}&year=${startMonth[0]}' title='前往${data.info_type.name}'>
-              <div class='inf-date'>
-                  <div class='during'>
-                      <div class='start-date'></div>
-                  </div>
-                  <span></span>
-              </div>
-              <div class='inf-detail'>
-                  <div class='inf-tag'>${data.info_type.name}</div>
-                  <h4>${data.name}</h4>
-              </div>
-              <span>more</span>
-              <i class='fas fa-chevron-right'></i>
-            </a>`;
-            const monthNumber = data.created_at.split('-');
-            if (monthNumber[1] === '10' || monthNumber[1] === '11' || monthNumber[1] === '12') {
-              monthArray.push(monthNumber[1]);
-            } else {
-              const singleMonth = monthNumber[1].split('0');
-              monthArray.push(singleMonth[1]);
-            };
-            const dataNumber = monthNumber[2].split('T');
-            dataArray.push(dataNumber[0]);
-          };
-        });
-
-        let x = 0;
-        document.querySelectorAll('.start-date').forEach(date => {
-          date.textContent = dataArray[x];
-          x++;
-        });
-
-        let i = 0;
-        document.querySelectorAll('.inf-date > span').forEach(month => {
-          month.textContent = monthData[monthArray[i] - 1];
-          i++
-        });
-      });
+      .then(response => response.json())
+      .then(result => dateChangeRader(result));
     changeMonth = changeMonth + count;
     if (dateTitle.previousElementSibling.textContent !== monthData[startIndex]) {
       dateTitle.previousElementSibling.textContent = monthData[monthIndex + count];
@@ -387,63 +219,8 @@ const mutationObserver = new MutationObserver(function (mutations) {
           method: 'POST',
           body: formData,
         })
-          .then(response => {
-            return response.json();
-          })
-          .then(result => {
-            const monthArray = [];
-            const dataArray = [];
-            contentInfs.innerHTML = '';
-            result.forEach(data => {
-              if (data === 'none') {
-                contentInfs.innerHTML +=
-                  `<div class='content-inf'>
-                  <div class='inf-detail ml-4'>
-                      <h4 style='line-height:9.25vh'>No Events</h4>
-                  </div>
-                </div>
-                `;
-              } else {
-                const startMonth = data.date_start.split('-');
-                contentInfs.innerHTML +=
-                  `<a class='content-inf' href='/news?tap=${data.info_type.id}&month=${startMonth[1]}&year=${startMonth[0]}' title='前往${data.info_type.name}'>
-                  <div class='inf-date'>
-                      <div class='during'>
-                          <div class='start-date'></div>
-                      </div>
-                      <span></span>
-                  </div>
-                  <div class='inf-detail'>
-                      <div class='inf-tag'>${data.info_type.name}</div>
-                      <h4>${data.name}</h4>
-                  </div>
-                  <span>more</span>
-                  <i class='fas fa-chevron-right'></i>
-                </a>`;
-                const monthNumber = data.created_at.split('-');
-                if (monthNumber[1] === '10' || monthNumber[1] === '11' || monthNumber[1] === '12') {
-                  monthArray.push(monthNumber[1]);
-                } else {
-                  const singleMonth = monthNumber[1].split('0');
-                  monthArray.push(singleMonth[1]);
-                };
-                const dataNumber = monthNumber[2].split('T');
-                dataArray.push(dataNumber[0]);
-              };
-            });
-
-            let x = 0;
-            document.querySelectorAll('.start-date').forEach(date => {
-              date.textContent = dataArray[x];
-              x++;
-            });
-
-            let i = 0;
-            document.querySelectorAll('.inf-date > span').forEach(month => {
-              month.textContent = monthData[monthArray[i] - 1];
-              i++
-            });
-          });
+          .then(response => response.json())
+          .then(result => dateChangeRader(result));
       }
       else {
         const titleMonth = seleteArray[1].split('0');
@@ -460,63 +237,8 @@ const mutationObserver = new MutationObserver(function (mutations) {
           method: 'POST',
           body: formData,
         })
-          .then(response => {
-            return response.json();
-          })
-          .then(result => {
-            const monthArray = [];
-            const dataArray = [];
-            contentInfs.innerHTML = '';
-            result.forEach(data => {
-              if (data === 'none') {
-                contentInfs.innerHTML +=
-                  `<div class='content-inf'>
-                  <div class='inf-detail ml-4'>
-                      <h4 style='line-height:9.25vh'>No Events</h4>
-                  </div>
-                </div>
-                `;
-              } else {
-                const startMonth = data.date_start.split('-');
-                contentInfs.innerHTML +=
-                  `<a class='content-inf' href='/news?tap=${data.info_type.id}&month=${startMonth[1]}&year=${startMonth[0]}' title='前往${data.info_type.name}'>
-                  <div class='inf-date'>
-                      <div class='during'>
-                          <div class='start-date'></div>
-                      </div>
-                      <span></span>
-                  </div>
-                  <div class='inf-detail'>
-                      <div class='inf-tag'>${data.info_type.name}</div>
-                      <h4>${data.name}</h4>
-                  </div>
-                  <span>more</span>
-                  <i class='fas fa-chevron-right'></i>
-                </a>`;
-                const monthNumber = data.created_at.split('-');
-                if (monthNumber[1] === '10' || monthNumber[1] === '11' || monthNumber[1] === '12') {
-                  monthArray.push(monthNumber[1]);
-                } else {
-                  const singleMonth = monthNumber[1].split('0');
-                  monthArray.push(singleMonth[1]);
-                };
-                const dataNumber = monthNumber[2].split('T');
-                dataArray.push(dataNumber[0]);
-              };
-            });
-
-            let x = 0;
-            document.querySelectorAll('.start-date').forEach(date => {
-              date.textContent = dataArray[x];
-              x++;
-            });
-
-            let i = 0;
-            document.querySelectorAll('.inf-date > span').forEach(month => {
-              month.textContent = monthData[monthArray[i] - 1];
-              i++
-            });
-          });
+          .then(response => response.json())
+          .then(result => dateChangeRader(result));
       }
     };
   });
@@ -529,13 +251,66 @@ mutationObserver.observe(phoneDateSelect, {
   attributeOldValue: true,
   characterDataOldValue: true
 });
+function dateChangeRader(result) {
+  const monthArray = [];
+  const dataArray = [];
+  contentInfs.innerHTML = '';
+  result.forEach(data => {
+    if (data === 'none') {
+      contentInfs.innerHTML +=
+        `<div class='content-inf'>
+        <div class='inf-detail ml-4'>
+            <h4 style='line-height:9.25vh'>No Events</h4>
+        </div>
+      </div>
+      `;
+    } else {
+      const startMonth = data.date_start.split('-');
+      contentInfs.innerHTML +=
+        `<a class='content-inf' href='/news?tap=${data.info_type.id}&month=${startMonth[1]}&year=${startMonth[0]}' title='前往${data.info_type.name}'>
+        <div class='inf-date'>
+            <div class='during'>
+                <div class='start-date'></div>
+            </div>
+            <span></span>
+        </div>
+        <div class='inf-detail'>
+            <div class='inf-tag'>${data.info_type.name}</div>
+            <h4>${data.name}</h4>
+        </div>
+        <span>more</span>
+        <i class='fas fa-chevron-right'></i>
+      </a>`;
+      const monthNumber = data.created_at.split('-');
+      if (monthNumber[1] === '10' || monthNumber[1] === '11' || monthNumber[1] === '12') {
+        monthArray.push(monthNumber[1]);
+      } else {
+        const singleMonth = monthNumber[1].split('0');
+        monthArray.push(singleMonth[1]);
+      };
+      const dataNumber = monthNumber[2].split('T');
+      dataArray.push(dataNumber[0]);
+    };
+  });
+
+  let x = 0;
+  document.querySelectorAll('.start-date').forEach(date => {
+    date.textContent = dataArray[x];
+    x++;
+  });
+
+  let i = 0;
+  document.querySelectorAll('.inf-date > span').forEach(month => {
+    month.textContent = monthData[monthArray[i] - 1];
+    i++
+  });
+};
 
 //審計地圖js
 const MapStores = document.querySelectorAll('.map-bgc div');
 const MapMessage = document.querySelector('.map-message');
 MapStores.forEach(function (MapStore) {
   MapStore.addEventListener('mouseover', function () {
-
     const ShopId = this.getAttribute('value');
     const ShopStyle = this.getAttribute('data-name');
     const ShopPhone = this.getAttribute('data-phone');
@@ -591,20 +366,18 @@ const windowTitles = document.querySelectorAll('.window-title');
 const checkBtnLists = document.querySelectorAll('.shop-window > ul');
 navTaps.forEach(tab => {
   tab.addEventListener('click', function () {
-    navNone (shopList, this);
-    navNone (tapChange, this);
-    windowObjectNone (windowTitles, this);
-    windowObjectNone (checkBtnLists, this);
-    bottomLine ();
+    navNone(shopList, this);
+    navNone(tapChange, this);
+    windowObjectNone(windowTitles, this);
+    windowObjectNone(checkBtnLists, this);
+    bottomLine();
     photoResume();
-    navTaps.forEach(tab => {
-      tab.classList.remove('tap-active');
-    })
+    navTaps.forEach(tab => tab.classList.remove('tap-active'));
     this.classList.add('tap-active');
   });
 });
 
-function navNone (doms, event) {
+function navNone(doms, event) {
   doms.forEach(object => {
     object.classList.add('appear-none');
     if (object.dataset.title === event.dataset.title) {
@@ -613,7 +386,7 @@ function navNone (doms, event) {
   });
 };
 
-function windowObjectNone (doms, event) {
+function windowObjectNone(doms, event) {
   doms.forEach(object => {
     object.classList.add('appear-none');
     if (object.dataset.title === '7' && event.dataset.title === '2') {
@@ -624,7 +397,7 @@ function windowObjectNone (doms, event) {
   });
 };
 
-function bottomLine () {
+function bottomLine() {
   shopBtns.forEach(btn => {
     btn.classList.remove('bottom-line');
     if (btn.dataset.title === '0' || btn.dataset.title === '7') {
@@ -634,9 +407,7 @@ function bottomLine () {
 };
 
 function photoResume() {
-  shopPhotos.forEach(photo => {
-    photo.style.transform = `translateX(0%)`;
-  });
+  shopPhotos.forEach(photo => photo.style.transform = `translateX(0%)`);
 };
 
 //判斷傳進來的url值後切換到對應商家的分類
@@ -649,21 +420,21 @@ if (urlType === '2') {
   document.getElementsByClassName('nav-tap')[1].classList.add('tap-active');
   urlTypeNavChange('shop-list');
   urlTypeNavChange('tap-change');
-  urlTypeWindowObjectNone (windowTitles);
-  urlTypeWindowObjectNone (checkBtnLists);
-  bottomLine ();
+  urlTypeWindowObjectNone(windowTitles);
+  urlTypeWindowObjectNone(checkBtnLists);
+  bottomLine();
   photoResume();
 };
-if(urlShop !== null){
+if (urlShop !== null) {
   urlShopWindowObjectNone(windowTitles);
   urlShopWindowObjectNone(checkBtnLists);
   shopBtns.forEach(btn => {
     btn.classList.remove('bottom-line');
-    if(String(urlShop - 1) === btn.dataset.title){
+    if (String(urlShop - 1) === btn.dataset.title) {
       btn.classList.add('bottom-line');
     };
   });
-  shopPhotos.forEach(photo =>{
+  shopPhotos.forEach(photo => {
     urlType === '1'
       ?
       photo.style.transform = `translateX(-${(urlShop - 1) * 100}%)`
@@ -672,12 +443,12 @@ if(urlShop !== null){
   });
 };
 
-function urlTypeNavChange (doms) {
+function urlTypeNavChange(doms) {
   document.getElementsByClassName(`${doms}`)[0].classList.add('appear-none');
   document.getElementsByClassName(`${doms}`)[1].classList.remove('appear-none');
 };
 
-function urlTypeWindowObjectNone (doms) {
+function urlTypeWindowObjectNone(doms) {
   doms.forEach(object => {
     object.classList.add('appear-none');
     if (object.dataset.title === '7') {
@@ -686,7 +457,7 @@ function urlTypeWindowObjectNone (doms) {
   });
 };
 
-function urlShopWindowObjectNone (doms) {
+function urlShopWindowObjectNone(doms) {
   doms.forEach(title => {
     title.classList.add('appear-none');
     if (String(urlShop - 1) === title.dataset.title) {
@@ -698,11 +469,9 @@ function urlShopWindowObjectNone (doms) {
 //店家介紹-點擊店家名稱切換圖片效果
 shopBtns.forEach(btns => {
   btns.addEventListener('click', function () {
-    btnToWindowObjectNone (windowTitles, this);
-    btnToWindowObjectNone (checkBtnLists, this);
-    shopBtns.forEach(btn => {
-      btn.classList.remove('bottom-line');
-    });
+    btnToWindowObjectNone(windowTitles, this);
+    btnToWindowObjectNone(checkBtnLists, this);
+    shopBtns.forEach(btn => btn.classList.remove('bottom-line'));
     this.classList.add('bottom-line');
     shopPhotos.forEach(photo => {
       this.parentNode.parentNode.className === 'food-shop shop-list'
@@ -714,7 +483,7 @@ shopBtns.forEach(btns => {
   });
 });
 
-function btnToWindowObjectNone (doms, event) {
+function btnToWindowObjectNone(doms, event) {
   doms.forEach(title => {
     title.classList.add('appear-none');
     if (event.dataset.title === title.dataset.title) {
