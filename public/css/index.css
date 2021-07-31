@@ -3507,7 +3507,7 @@ header .nav-img.active {
 }
 
 #view .view-container .view-main .swiper-container .swiper-wrapper .swiper-slide .view-card {
-  width: 208px;
+  width: 250px;
   height: 40vh;
   min-height: 310px;
   background-color: #D28E76;
@@ -3517,6 +3517,20 @@ header .nav-img.active {
   color: #FFFCF4;
   line-height: 2.78vh;
   padding-top: 2.31vh;
+  padding: 20px 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+@media (max-width: 1366px) {
+  #view .view-container .view-main .swiper-container .swiper-wrapper .swiper-slide .view-card {
+    width: 206px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -3532,8 +3546,8 @@ header .nav-img.active {
 }
 
 #view .view-container .view-main .swiper-container .swiper-wrapper .swiper-slide .view-card .view-card-img {
-  width: 150px;
-  height: 120px;
+  width: 100%;
+  height: 15vh;
   display: block;
   margin: 10px auto 0;
   background-position: center;
@@ -3559,11 +3573,18 @@ header .nav-img.active {
 }
 
 #view .view-container .view-main .swiper-container .swiper-wrapper .swiper-slide .view-card p:last-child {
+  margin-top: 10px;
   letter-spacing: 0.2em;
   line-height: 2.31vh;
-  font-size: 0.8rem;
-  -webkit-transform: scale(0.8);
-          transform: scale(0.8);
+}
+
+@media (max-width: 1366px) {
+  #view .view-container .view-main .swiper-container .swiper-wrapper .swiper-slide .view-card p:last-child {
+    margin-top: 0;
+    font-size: 0.8rem;
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
 }
 
 #view .view-container .view-main .swiper-container .swiper-wrapper .swiper-slide-active {
@@ -4375,7 +4396,9 @@ header .nav-img.active {
           transform: translateX(-7.8vw);
 }
 
-#ui-datepicker-div .ui-datepicker-prev, #ui-datepicker-div .ui-datepicker-next, #ui-datepicker-div .ui-datepicker-calendar {
+#ui-datepicker-div .ui-datepicker-prev,
+#ui-datepicker-div .ui-datepicker-next,
+#ui-datepicker-div .ui-datepicker-calendar {
   display: none;
 }
 
