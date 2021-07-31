@@ -2434,7 +2434,7 @@ header {
                         font-size: $h7;
 
                         .view-card {
-                            @include size(208px, 40vh);
+                            @include size(250px, 40vh);
                             min-height: 310px;
                             background-color: $title-bg;
                             border-radius: 20px;
@@ -2443,6 +2443,13 @@ header {
                             color: $body-bg;
                             line-height: 2.78vh;
                             padding-top: 2.31vh;
+                            padding: 20px 25px;
+                            display: flex;
+                            flex-direction: column;
+
+                            @include w1366 {
+                                width: 206px;
+                            }
 
                             @include w576 {
                                 border-radius: 10px;
@@ -2453,7 +2460,7 @@ header {
                             }
 
                             .view-card-img {
-                                @include size(150px, 120px);
+                                @include size(100%, 15vh);
                                 display: block;
                                 margin: 10px auto 0;
                                 background-position: center;
@@ -2475,10 +2482,15 @@ header {
                             }
 
                             p:last-child {
+                                margin-top: 10px;
                                 letter-spacing: 0.2em;
                                 line-height: 2.31vh;
-                                font-size: 0.8rem;
-                                transform: scale(0.8);
+
+                                @media(max-width:1366px) {
+                                    margin-top: 0;
+                                    font-size: 0.8rem;
+                                    transform: scale(0.8);
+                                }
                             }
                         }
                     }
